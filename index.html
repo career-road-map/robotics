@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>War Room Roadmap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;600;800&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f4f3ef;
+  --bg2: #ffffff;
+  --bg3: #edecea;
+  --bg4: #e4e3df;
+  --border: rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.15);
+  --text: #0e0e0e;
+  --muted: #666560;
+  --dim: #999894;
+  --cyan: #00c8b0;
+  --cyan2: #00a896;
+  --magenta: #e0287a;
+  --magenta2: #b81f62;
+  --yellow: #f0b429;
+  --blue: #1a6ef5;
+  --green: #1db85a;
+  --mono: 'Share Tech Mono', monospace;
+  --display: 'Orbitron', sans-serif;
+  --body: 'Sora', sans-serif;
+  --radius: 6px;
+  --radius-lg: 10px;
+  --player-color: #e0287a;
+  --player-bg: rgba(224,40,122,0.07);
+  --player-border: rgba(224,40,122,0.22);
+  --player-dark: #72243E;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--body);
+  font-size: 15px;
+  line-height: 1.65;
+  min-height: 100vh;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.012) 2px, rgba(0,0,0,0.012) 4px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* HEADER */
+header {
+  background: var(--text);
+  color: var(--bg);
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+.header-scanline {
+  background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.03) 3px, rgba(255,255,255,0.03) 6px);
+  padding: 52px 48px 44px;
+}
+.header-inner { max-width: 1100px; margin: 0 auto; }
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+  margin-bottom: 0;
+}
+.boot-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--cyan);
+  letter-spacing: .08em;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.boot-tag::before { content: '▶'; font-size: 9px; animation: blink 1.2s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+h1 {
+  font-family: var(--display);
+  font-size: clamp(26px, 4vw, 46px);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -.01em;
+  margin-bottom: 16px;
+  color: #fff;
+}
+h1 .cyan { color: var(--cyan); }
+h1 .player { color: #5b9bff; }
+.header-desc {
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  max-width: 520px;
+  line-height: 1.8;
+}
+
+.hud-row:last-child { border-bottom: none; }
+
+/* MAIN */
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 48px 80px;
+}
+
+.block-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 12px;
+}
+.block-title {
+  font-family: var(--display);
+  font-size: clamp(18px, 2.2vw, 26px);
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+.block-title .cyan { color: var(--cyan); }
+.block-title .player { color: #5b9bff; }
+.block-body { font-size: 14px; color: var(--muted); line-height: 1.8; max-width: 700px; margin-bottom: 24px; }
+
+/* ---- PHASE BLOCKS (roadmap) ---- */
+.phase-row { display: flex; align-items: stretch; gap: 0; margin-bottom: 14px; }
+.phase-spine { width: 3px; border-radius: 99px; flex-shrink: 0; margin-right: 16px; }
+.spine-cyan { background: var(--cyan); }
+.spine-player { background: var(--player-color); }
+.spine-shared { background: linear-gradient(to bottom, var(--cyan), var(--player-color)); }
+.spine-gold { background: var(--yellow); }
+.phase-content { flex: 1; }
+
+.phase-hdr { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+.phase-badge {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 0.5px solid;
+}
+.pb-cyan { background: rgba(0,200,176,0.10); color: #007a6b; border-color: rgba(0,200,176,0.28); }
+.pb-player { background: var(--player-bg); color: var(--player-dark); border-color: var(--player-border); }
+.pb-shared { background: rgba(224,40,122,0.08); color: #7a1a4a; border-color: rgba(224,40,122,0.22); }
+.pb-gold { background: rgba(240,180,41,0.09); color: #8a5a00; border-color: rgba(240,180,41,0.25); }
+.phase-dates { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-left: auto; }
+
+/* MILESTONE CARD */
+.milestone-card {
+  background: var(--bg2);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px 22px;
+  margin-bottom: 10px;
+  transition: border-color .18s, transform .18s;
+}
+.milestone-card:hover { border-color: var(--cyan); transform: translateY(-1px); }
+.mc-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+.mc-icon { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+.mc-titles { flex: 1; }
+.mc-name { font-size: 14px; font-weight: 600; line-height: 1.3; margin-bottom: 3px; }
+.mc-loc { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+.mc-target {
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 3px 9px;
+  border-radius: 4px;
+  border: 0.5px solid;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.mt-cyan { background: rgba(0,200,176,0.10); color: #007a6b; border-color: rgba(0,200,176,0.28); }
+.mt-player { background: var(--player-bg); color: var(--player-dark); border-color: var(--player-border); }
+.mt-gold { background: rgba(240,180,41,0.09); color: #7a5000; border-color: rgba(240,180,41,0.25); }
+.mc-desc { font-size: 12px; color: var(--muted); line-height: 1.65; margin-bottom: 10px; }
+.mc-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.mc-tag {
+  font-size: 10px;
+  font-family: var(--mono);
+  padding: 2px 7px;
+  border-radius: 3px;
+  border: 0.5px solid var(--border2);
+  background: var(--bg3);
+  color: var(--muted);
+}
+
+/* PROJECT CARDS GRID (phase 02 - two columns) */
+.proj-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 10px; }
+@media(max-width:680px){ .proj-two-col { grid-template-columns: 1fr; } }
+
+/* DIVERGE */
+.diverge-box {
+  background: var(--bg2);
+  border: 0.5px solid var(--border2);
+  border-radius: var(--radius-lg);
+  padding: 20px 22px;
+  margin-bottom: 14px;
+  text-align: center;
+}
+.div-label { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 10px; }
+.div-arrow-row { display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 6px; }
+.div-a { color: var(--player-color); font-size: 20px; font-weight: 600; }
+.div-b { color: var(--magenta); font-size: 20px; font-weight: 600; }
+.div-choose { font-size: 12px; color: var(--muted); font-family: var(--mono); }
+.div-title { font-size: 13px; font-weight: 500; color: var(--muted); }
+
+/* PATH COLUMNS */
+.path-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+@media(max-width:640px){ .path-cols { grid-template-columns: 1fr; } }
+.path-col { border-radius: var(--radius-lg); padding: 16px 18px; border: 0.5px solid; }
+.path-a-col { background: var(--player-bg); border-color: var(--player-border); }
+.path-b-col { background: rgba(224,40,122,0.06); border-color: rgba(224,40,122,0.20); }
+.path-col-hdr {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.pch-a { color: var(--player-color); }
+.pch-b { color: var(--magenta); }
+.path-step {
+  background: var(--bg2);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  cursor: default;
+  transition: border-color .15s;
+}
+.path-step:last-child { margin-bottom: 0; }
+.path-step:hover { border-color: var(--cyan); }
+.ps-period { font-family: var(--mono); font-size: 10px; color: var(--dim); margin-bottom: 4px; }
+.ps-name { font-size: 13px; font-weight: 600; margin-bottom: 3px; line-height: 1.3; }
+.ps-loc { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-bottom: 6px; }
+.ps-desc { font-size: 11px; color: var(--muted); line-height: 1.55; }
+.ps-badge {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  border: 0.5px solid;
+  margin-top: 6px;
+}
+.psb-a { background: var(--player-bg); color: var(--player-dark); border-color: var(--player-border); }
+.psb-b { background: rgba(224,40,122,0.07); color: #7a1a4a; border-color: rgba(224,40,122,0.20); }
+
+/* OUTCOMES */
+.outcome-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
+@media(max-width:640px){ .outcome-cols { grid-template-columns: 1fr; } }
+.outcome-card { border-radius: var(--radius-lg); padding: 22px; border: 0.5px solid; text-align: center; }
+.oc-a { background: var(--player-bg); border-color: var(--player-border); }
+.oc-b { background: rgba(224,40,122,0.06); border-color: rgba(224,40,122,0.20); }
+.oc-path { font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 6px; }
+.oc-pa { color: var(--player-color); }
+.oc-pb { color: var(--magenta2); }
+.oc-title { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+.oc-val { font-family: var(--display); font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+.oc-va { color: var(--player-color); }
+.oc-vb { color: var(--magenta); }
+.oc-sub { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 48px;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--dim);
+  letter-spacing: .05em;
+}
+footer a { color: var(--cyan); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .header-scanline { padding: 36px 24px 28px; }
+  main { padding: 32px 24px 60px; }
+  .header-top { flex-direction: column; }
+  
+  footer { padding: 24px; }
+}
+@media(max-width:600px){
+  .pc-body { grid-template-columns: 1fr; }
+  .skill-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-scanline">
+    <div class="header-inner">
+      <div class="boot-tag">WAR ROOM // MISSION BRIEF</div>
+      <h1><span class="cyan">Robotics Engineering</span></h1>
+      <p class="header-desc">From 5 × A* in Johannesburg to a £2,000/day contract in London — or a $3M/year role in Silicon Valley. Two paths. One non-negotiable starting point.</p>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- PHASE 1: IGCSE -->
+<div class="phase-row">
+  <div class="phase-spine spine-cyan"></div>
+  <div class="phase-content">
+    <div class="phase-hdr">
+      <div class="phase-badge pb-cyan">Phase 01 — The Campaign</div>
+      <div class="phase-dates">Jun – Oct 2026 · Johannesburg</div>
+    </div>
+    <div class="milestone-card">
+      <div class="mc-head">
+        <div class="mc-icon">🎯</div>
+        <div class="mc-titles">
+          <div class="mc-name">IGCSE Scorecard — The Gateway</div>
+          <div class="mc-loc">Cambridge International · October 2026 · Johannesburg</div>
+        </div>
+        <div class="mc-target mt-cyan">5 × A* · Non-negotiable</div>
+      </div>
+      <div class="mc-desc">Five A* grades — Maths, Physics, Computer Science, Chemistry, and English Language — is not a target to aim for. It is the floor. This scorecard unlocks every option on both paths. A shortfall closes doors that cannot be reopened later.</div>
+      <div class="mc-tags">
+        <span class="mc-tag">Maths A*</span>
+        <span class="mc-tag">Physics A*</span>
+        <span class="mc-tag">Computer Science A*</span>
+        <span class="mc-tag">Chemistry A*</span>
+        <span class="mc-tag">English Language A*</span>
+        <span class="mc-tag">4 months focused prep</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE 2: PROJECT BUILD -->
+<div class="phase-row">
+  <div class="phase-spine spine-shared"></div>
+  <div class="phase-content">
+    <div class="phase-hdr">
+      <div class="phase-badge pb-shared">Phase 02 — Project Build</div>
+      <div class="phase-dates">Nov 2026 – Mar 2027 · Johannesburg (5 months)</div>
+    </div>
+    <div style="max-width:560px; margin:0 auto;">
+      <div class="milestone-card" style="margin-bottom:0; border-color: rgba(224,40,122,0.28);">
+        <div class="mc-head">
+          <div class="mc-icon">🤖</div>
+          <div class="mc-titles">
+            <div class="mc-name">Project</div>
+            <div class="mc-loc">Robotics Engineering / AI</div>
+          </div>
+        </div>
+        <div class="mc-desc">Build a real robotics engineering AI project. Control systems, computer vision, simulation. This is the thing that makes an admissions committee stop scrolling. Functional, documented, deployed.</div>
+        <div class="mc-tags"><span class="mc-tag">Robotics AI</span><span class="mc-tag">Computer vision</span><span class="mc-tag">GitHub portfolio</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DIVERGE -->
+<div class="diverge-box">
+  <div class="div-label">// April 2027 — the paths diverge</div>
+  <div class="div-arrow-row">
+    <div class="div-a">⬅ Path A</div>
+    <div class="div-choose">CHOOSE</div>
+    <div class="div-b">Path B ➡</div>
+  </div>
+  <div class="div-title">London via UCL &nbsp;·&nbsp; or &nbsp;·&nbsp; Silicon Valley via Stanford</div>
+</div>
+
+<!-- PATH COLUMNS -->
+<div class="path-cols">
+  <div class="path-col path-a-col">
+    <div class="path-col-hdr pch-a">🇬🇧 Path A — London</div>
+    <div class="path-step">
+      <div class="ps-period">Apr – Aug 2027 · Johannesburg</div>
+      <div class="ps-name">UCL Performance-Based Entry</div>
+      <div class="ps-loc">Preparation &amp; Application Phase</div>
+      <div class="ps-desc">Build the UCL application from Johannesburg. Performance-based entry means the project portfolio and IGCSE scores do the talking. 5 months to polish both.</div>
+      <span class="ps-badge psb-a">5 months</span>
+    </div>
+    <div class="path-step">
+      <div class="ps-period">Sep 2027 – Aug 2028 · Johannesburg</div>
+      <div class="ps-name">UCL Computer Science Online — Year 1</div>
+      <div class="ps-loc">Remote from Johannesburg</div>
+      <div class="ps-desc">Year 1 of UCL's Computer Science programme, completed remotely. Full academic rigour. Build the foundation while still at home, zero relocation cost.</div>
+      <span class="ps-badge psb-a">12 months · remote</span>
+    </div>
+    <div class="path-step">
+      <div class="ps-period">Sep 2029 – Aug 2031 · London</div>
+      <div class="ps-name">UCL Computer Science — Years 2 &amp; 3</div>
+      <div class="ps-loc">UCL Campus, London</div>
+      <div class="ps-desc">Transfer to desk for the final two undergraduate years. London campus. Research labs. Industry connections. The UCL network activates here.</div>
+      <span class="ps-badge psb-a">2 years · London</span>
+    </div>
+    <div class="path-step">
+      <div class="ps-period">Sep 2031 – Aug 2033 · London</div>
+      <div class="ps-name">Imperial College — Master's Degree</div>
+      <div class="ps-loc">Imperial College London · Years 4 &amp; 5</div>
+      <div class="ps-desc">The credential that opens the top tier of London tech. Imperial's engineering master's is recognised globally. Two years. Two more years of network-building.</div>
+      <span class="ps-badge psb-a">2 years · Imperial</span>
+    </div>
+  </div>
+
+  <div class="path-col path-b-col">
+    <div class="path-col-hdr pch-b">🇺🇸 Path B — Silicon Valley</div>
+    <div class="path-step">
+      <div class="ps-period">Apr – Aug 2027 · Johannesburg (10 months total)</div>
+      <div class="ps-name">Deep Project Work</div>
+      <div class="ps-loc">Robotics Engineering AI</div>
+      <div class="ps-desc">10 months of serious project work in Robotics Engineering AI. This is the portfolio that makes Foothill College an entry point, not a ceiling. Every line of code counts.</div>
+      <span class="ps-badge psb-b">10 months · JHB</span>
+    </div>
+    <div class="path-step">
+      <div class="ps-period">Sep 2027 – Aug 2029 · Silicon Valley</div>
+      <div class="ps-name">Foothill College — Engineering Foundation</div>
+      <div class="ps-loc">Foothill College, Silicon Valley</div>
+      <div class="ps-desc">Two years of engineering foundation in the heart of Silicon Valley. 4.0 GPA is the only acceptable outcome. The stepping stone to Stanford — not a detour from it.</div>
+      <span class="ps-badge psb-b">2 years · SV</span>
+    </div>
+    <div class="path-step">
+      <div class="ps-period">Sep 2029 – Aug 2031 · Silicon Valley</div>
+      <div class="ps-name">Stanford University — Engineering Years 3 &amp; 4</div>
+      <div class="ps-loc">Stanford University, Palo Alto</div>
+      <div class="ps-desc">Transfer to Stanford for the final two undergraduate years. The credential, the network, and the ecosystem that defines Silicon Valley careers.</div>
+      <span class="ps-badge psb-b">2 years · Stanford</span>
+    </div>
+  </div>
+</div>
+
+<!-- OUTCOMES -->
+<div class="outcome-cols">
+  <div class="outcome-card oc-a">
+    <div style="font-size:28px;margin-bottom:10px">🏙️</div>
+    <div class="oc-path oc-pa">// Path A outcome · Sep 2033</div>
+    <div class="oc-title">Startup · or London Contract</div>
+    <div class="oc-val oc-va">£2,000/day</div>
+    <div class="oc-sub">UCL + Imperial credential. London tech market. Or found your own Robotics AI company with 7 years of elite education and network behind you.</div>
+  </div>
+  <div class="outcome-card oc-b">
+    <div style="font-size:28px;margin-bottom:10px">🚀</div>
+    <div class="oc-path oc-pb">// Path B outcome · Sep 2031</div>
+    <div class="oc-title">Startup · or SV Role</div>
+    <div class="oc-val oc-vb">$3M/year</div>
+    <div class="oc-sub">Stanford credential. Silicon Valley ecosystem. Or co-found with Melusi and Dad — two engineers, 30 years of software experience, one unforgettable story.</div>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  War Room Roadmap · Jun 2026 → Destination &nbsp;·&nbsp;
+  <a href="melusi.html">→ Switch to Melusi's roadmap</a>
+</footer>
+
+</body>
+</html>
