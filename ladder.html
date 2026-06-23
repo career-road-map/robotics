@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Robotics Engineering Ladder — 20 Projects</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;600;800&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f4f3ef;
+  --bg2: #ffffff;
+  --bg3: #edecea;
+  --border: rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.15);
+  --text: #0e0e0e;
+  --muted: #666560;
+  --dim: #999894;
+  --cyan: #00c8b0;
+  --cyan2: #00a896;
+  --magenta: #e0287a;
+  --yellow: #f0b429;
+  --blue: #1a6ef5;
+  --mono: 'Share Tech Mono', monospace;
+  --display: 'Orbitron', sans-serif;
+  --body: 'Sora', sans-serif;
+  --radius: 6px;
+  --radius-lg: 10px;
+  --player-color: #e0287a;
+  --player-bg: rgba(224,40,122,0.07);
+  --player-border: rgba(224,40,122,0.22);
+  --player-dark: #72243E;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--body);
+  font-size: 15px;
+  line-height: 1.65;
+  min-height: 100vh;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.012) 2px, rgba(0,0,0,0.012) 4px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+header {
+  background: var(--text);
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+.header-scanline {
+  background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.03) 3px, rgba(255,255,255,0.03) 6px);
+  padding: 48px 48px 40px;
+}
+.header-inner { max-width: 1100px; margin: 0 auto; }
+.boot-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--cyan);
+  letter-spacing: .08em;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.boot-tag::before { content: '▶'; font-size: 9px; animation: blink 1.2s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+h1 {
+  font-family: var(--display);
+  font-size: clamp(22px, 3.5vw, 38px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -.01em;
+  margin-bottom: 12px;
+  color: #fff;
+}
+h1 .cyan { color: var(--cyan); }
+.header-desc { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.8; }
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .06em;
+  color: rgba(255,255,255,0.4);
+  text-decoration: none;
+  margin-top: 16px;
+  border: 0.5px solid rgba(255,255,255,0.12);
+  padding: 4px 10px;
+  border-radius: 4px;
+  transition: color .15s, border-color .15s;
+}
+.back-link:hover { color: var(--cyan); border-color: rgba(0,200,176,0.4); }
+
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 48px 80px;
+}
+
+/* PHASE DIVIDER */
+.phase-divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 40px 0 20px;
+}
+.phase-divider:first-child { margin-top: 0; }
+.pd-badge {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 4px;
+  border: 0.5px solid;
+  white-space: nowrap;
+}
+.pd-jhb { background: rgba(0,200,176,0.10); color: #007a6b; border-color: rgba(0,200,176,0.28); }
+.pd-foothill { background: rgba(224,40,122,0.08); color: var(--player-dark); border-color: var(--player-border); }
+.pd-stanford { background: rgba(240,180,41,0.09); color: #8a5a00; border-color: rgba(240,180,41,0.28); }
+.pd-line { flex: 1; height: 0.5px; background: var(--border2); }
+.pd-dates { font-family: var(--mono); font-size: 10px; color: var(--dim); white-space: nowrap; }
+
+/* PROJECT CARD */
+.project-card {
+  background: var(--bg2);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 22px 24px;
+  margin-bottom: 12px;
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  gap: 0 18px;
+  transition: border-color .18s, transform .18s;
+}
+.project-card:hover { border-color: var(--cyan); transform: translateY(-1px); }
+.project-card.stanford-card { border-color: rgba(240,180,41,0.40); background: rgba(240,180,41,0.03); }
+.project-card.stanford-card:hover { border-color: var(--yellow); }
+
+.pc-num {
+  font-family: var(--display);
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--border2);
+  line-height: 1;
+  padding-top: 3px;
+  text-align: right;
+  letter-spacing: -.02em;
+}
+.stanford-card .pc-num { color: rgba(240,180,41,0.5); }
+
+.pc-body { }
+.pc-phase-tag {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 3px;
+  border: 0.5px solid;
+  display: inline-block;
+  margin-bottom: 8px;
+}
+.pct-jhb { background: rgba(0,200,176,0.08); color: #007a6b; border-color: rgba(0,200,176,0.22); }
+.pct-foothill { background: var(--player-bg); color: var(--player-dark); border-color: var(--player-border); }
+.pct-stanford { background: rgba(240,180,41,0.09); color: #7a5000; border-color: rgba(240,180,41,0.25); }
+
+.pc-name {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 4px;
+  color: var(--text);
+}
+.pc-subtitle {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+.pc-desc { font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 12px; }
+.pc-outcome {
+  font-size: 12px;
+  color: var(--text);
+  line-height: 1.6;
+  padding: 10px 12px;
+  background: var(--bg3);
+  border-radius: var(--radius);
+  border-left: 2px solid var(--cyan);
+  margin-bottom: 12px;
+}
+.stanford-card .pc-outcome { border-left-color: var(--yellow); }
+.pc-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.pc-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  background: var(--bg3);
+  color: var(--muted);
+  border: 0.5px solid var(--border);
+}
+
+/* STANFORD CALLOUT */
+.stanford-callout {
+  background: linear-gradient(135deg, rgba(240,180,41,0.07), rgba(240,180,41,0.03));
+  border: 0.5px solid rgba(240,180,41,0.35);
+  border-radius: var(--radius-lg);
+  padding: 20px 22px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+.sc-icon { font-size: 28px; margin-bottom: 8px; }
+.sc-title { font-family: var(--display); font-size: 16px; font-weight: 800; color: #8a5a00; margin-bottom: 6px; }
+.sc-sub { font-size: 13px; color: var(--muted); line-height: 1.7; max-width: 640px; margin: 0 auto; }
+
+footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 48px;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--dim);
+  letter-spacing: .05em;
+}
+footer a { color: var(--cyan); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+@media(max-width:900px){
+  .header-scanline { padding: 36px 24px 28px; }
+  main { padding: 32px 24px 60px; }
+  footer { padding: 24px; }
+}
+@media(max-width:600px){
+  .project-card { grid-template-columns: 36px 1fr; gap: 0 12px; }
+  .pc-num { font-size: 18px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-scanline">
+    <div class="header-inner">
+      <div class="boot-tag">WAR ROOM // LADDER DETAIL</div>
+      <h1>Robotics Engineering — <span class="cyan">20 Project Ladder</span></h1>
+      <p class="header-desc">Johannesburg → Foothill College → Stanford · Nov 2026 – Sep 2029</p>
+      <a href="index.html" class="back-link">← Back to Roadmap</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ═══════════════════════════════════════════ PHASE A: JOHANNESBURG -->
+<div class="phase-divider">
+  <div class="pd-badge pd-jhb">Phase A — Johannesburg</div>
+  <div class="pd-line"></div>
+  <div class="pd-dates">Nov 2026 – Aug 2027 · 10 months</div>
+</div>
+
+<!-- PROJECT 01 -->
+<div class="project-card">
+  <div class="pc-num">01</div>
+  <div class="pc-body">
+    <span class="pc-phase-tag pct-jhb">Johannesburg · Month 1</span>
+    <div class="pc-name">Blink Machine</div>
+    <div class="pc-subtitle">GPIO LED Array · Timing Logic · C on Raspberry Pi</div>
+    <div class="pc-desc">The entry point. Wire a 16-LED array to a Raspberry Pi's GPIO pins. Write bare-metal C to drive patterns — binary counter, Knight Rider sweep, Morse code encoder. The goal is not the lights: it is learning that every robot starts with a signal going in or out of a pin.</div>
+    <div class="pc-outcome"><strong>Outcome:</strong> Understand GPIO, pull-up/pull-down resistors, timing loops, and the mental model that hardware is just bits flowing through wires. Foundation for every project that follows.</div>
+    <div class="pc-tags"><span class="pc-tag">C</span><span class="pc-tag">Raspberry Pi</span><span class="pc-tag">GPIO</span><span class="pc-tag">Electronics</span></div>
+  </div>
+</div>
+
+<!-- PROJECT 02 -->
+<div class="project-card">
+  <div class="pc-num">02</div>
+  <div class="pc-body">
+    <span class="pc-phase-tag pct-jhb">Johannesburg · Month 1–2</span>
+    <div class="pc-name">Line-Following Robot</div>
+    <div class="pc-subtitle">IR Sensors · PID Motor Control · Two-Wheel Chassis</div>
+    <div class="pc-desc">Build a chassis from scratch: motors, wheels, motor driver (L298N), and a 5-sensor IR array. Implement a PID controller in Python to keep the bot centred on a black tape track. Tune Kp, Ki, Kd until the robot holds the line at speed without oscillating.</div>
+    <div class="pc-outcome"><strong>Outcome:</strong> First real-world control theory. PID is the backbone of every motor, drone, and robotic joint in the industry. You will use this for the rest of your career.</div>
+    <div class="pc-tags"><span class="pc-tag">Python</span><span class="pc-tag">PID Control</span><span class="pc-tag">DC Motors</span><span class="pc-tag">IR Sensors</span></div>
+  </div>
+</div>
+
+<!-- PROJECT 03 -->
+<div class="project-card">
+  <div class="pc-num">03</div>
+  <div class="pc-body">
+    <span class="pc-phase-tag pct-jhb">Johannesburg · Month 2</span>
+    <div class="pc-name">Ultrasonic Obstacle Avoidance Bot</div>
+    <div class="pc-subtitle">HC-SR04 Sensors · Reactive Navigation · Real-Time Decision Logic</div>
+    <div class="pc-desc">Mount three HC-SR04 ultrasonic sensors (front, left-front, right-front) on the chassis from Project 02. Write a reactive navigation algorithm: detect obstacles at 20 cm, decide direction based on differential readings, execute avoidance manoeuvre. Add a servo-mounted sensor for angular sweep.</div>
+    <div class="pc-outcome"><strong>Outcome:</strong> Introduction to sensor fusion and reactive control. The robot makes decisions without human input — your first autonomous system.</div>
+    <div class="pc-tags"><span class="pc-tag">Python</span><span class="pc-tag">Ultrasonic</span><span class="pc-tag">Reactive Navigation</span><span class="pc-tag">Servos</span></div>
+  </div>
+</div>
+
+<!-- PROJECT 04 -->
+<div class="project-card">
+  <div class="pc-num">04</div>
+  <div class="pc-body">
+    <span class="pc-phase-tag pct-jhb">Johannesburg · Month 3</span>
+    <div class="pc-name">Servo Arm Controller</div>
+    <div class="pc-subtitle">3-DOF Desktop Arm · Inverse Kinematics · Python GUI</div>
+    <div class="pc-desc">Build or kit a 3-degree-of-freedom desktop robotic arm with three servo joints. Implement forward kinematics to compute end-effector position from joint angles. Then implement inverse kinematics (analytical or Jacobian-based) so the arm reaches a target XYZ coordinate. Build a Tkinter GUI with sliders for direct joint control and click-to-reach coordinate input.</div>
+    <div class="pc-outcome"><strong>Outcome:</strong> Kinematics is the mathematics of robotic movement. Every industrial arm, surgical robot, and humanoid uses IK. You now speak this language.</div>
+    <div class="pc-tags"><span class="pc-tag">Python</span><span class="pc-tag">Servos</span><span class="pc-tag">Inverse Kinematics</span><span class="pc-tag">Tkinter</span><span class="pc-tag">Linear Algebra</span></div>
+  </div>
+</div>
+
+<!-- PROJECT 05 -->
+<div class="project-card">
+  <div class="pc-num">05</div>
+  <div class="pc-body">
+    <span class="pc-phase-tag pct-jhb">Johannesburg · Month 4</span>
+    <div class="pc-name">Computer Vision Object Tracker</div>
+    <div class="pc-subtitle">OpenCV · Colour/Shape Detection · Pan-Tilt Turret</div>
+    <div class="pc-desc">Mount a camera on a two-axis servo pan-tilt bracket. Use OpenCV to detect a coloured object (or ArUco marker) in the frame. Compute the pixel offset from centre and drive the servos to keep the target centred. Extend to track multiple objects and log position over time. This is the eye of the robot.</div>
+    <div class="pc-outcome"><strong>Outcome:</strong> Computer vision feeding a physical actuator. The camera-to-motor pipeline is present in every vision-guided robot on the planet.</div>
+    <div class="pc-tags"><span class="pc-tag">Python</span><span class="pc-tag">OpenCV</span><span class="pc-tag">Pan-Tilt</span><span class="pc-tag">ArUco</span><span class="pc-tag">Servo Control</span></div>
+  </div>
+</div>
+
+<!-- PROJECT 06 -->
+<div class="project-card">
+  <div class="pc-num">06</div>
+  <div class="pc-body">
+    <span class="pc-phase-tag pct-jhb">Johannesburg · Month 5</span>
+    <div class="pc-name">Autonomous Grid Navigator</div>
+    <div class="pc-subtitle">A* Pathfinding · Physical Tile Grid · Encoder Odometry</div>
+    <div class="pc-desc">Build a 1m × 1m tile grid with black tape walls. Fit rotary encoders to the drive wheels. Implement A* pathfinding in Python on a graph of the grid. Give the robot a start cell and goal cell — it plans a path, then executes it using encoder odometry to count cells traversed. Add dynamic obstacle detection: if a sensor detects a blocked cell, replan in real time.</div>
+    <div class="pc-outcome"><strong>Outcome:</strong> Path planning + dead-reckoning navigation. You have built a miniature warehouse robot. This is what Amazon's Kiva system does.</div>
+    <div class="pc-tags"><span class="pc-tag">Python</span><span class="pc-tag">A* Algorithm</span><span class="pc-tag">Rotary Encoders</span><span class="pc-tag">Odometry</span><span class="pc-tag">Graph Search</span></div>
+  </div>
+</div>
+
+<!-- PROJECT 07 -->
+<div class="project-card">
+  <div class="pc-num">07</div>
+  <div class="pc-body">
+    <span class="pc-phase-tag pct-jhb">Johannesburg · Month 6</span>
+    <div class="pc-name">Voice-Command Robot</div>
+    <div class="pc-subtitle">OpenAI Whisper · NLP Intent Parsing · Motor Primitives</div>
+    <div class="pc-desc">Integrate a USB microphone. Run OpenAI Whisper locally (whisper.cpp on Pi) for speech-to-text. Build an intent classifier that maps spoken commands ("move forward two metres", "turn left", "pick up the object") to motor primitives. Add a feedback loop: the robot reads back its status via pyttsx3 text-to-speech. Implement a "stop" interrupt that overrides all commands immediately.</div>
+    <div class="pc-outcome"><strong>Outcome:</strong> Human-robot interface via natural language. NLP + actuation is the frontier of human-robot collaboration. You have a talking, listening robot.</div>
+    <div class="pc-tags"><span class="pc-tag">Python</span><span class="pc-tag">Whisper</span><span class="pc-tag">NLP</span><span class="pc-tag">Speech-to-Text</span><span class="pc-tag">Motor Control</span></div>
+  </div>
+</div>
+
+<!-- PROJECT 08 -->
+<div class="project-card">
+  <div class="pc-num">08</div>
+  <div class="pc-body">
+    <span class="pc-phase-tag pct-jhb">Johannesburg · Month 7</span>
+    <div class="pc-name">SLAM Mapper</div>
+    <div class="pc-subtitle">LiDAR · 2D Occupancy Maps · ROS 2 · Mobile Base</div>
+    <div class="pc-desc">Attach an RPLIDAR A1 to the mobile base. Install ROS 2 (Humble) on the Pi. Use the slam_toolbox package to generate a live 2D occupancy grid map as the robot drives around a room. Visualise in RViz2 on a laptop. Save the map and implement simple localisation: given the saved map, the robot estimates its position using particle filter (AMCL). Drive a pre-planned route using the Nav2 stack.</div>
+    <div class="pc-outcome"><strong>Outcome:</strong> Simultaneous Localisation and Mapping is the core unsolved problem in robotics. You now run industry-standard tools (ROS 2, Nav2) used by every robotics company in Silicon Valley.</div>
+    <div class="pc-tags"><span class="pc-tag">ROS 2</span><span class="pc-tag">LiDAR</span><span class="pc-tag">SLAM</span><span class="pc-tag">Nav2</span><span class="pc-tag">Python</span><span class="pc-tag">RViz2</span></div>
+  </div>
+</div>
+
+<!-- PROJECT 09 -->
+<div class="project-card">
+  <div class="pc-num">09</div>
+  <div class="pc-body">
+    <span class="pc-phase-tag pct-jhb">Johannesburg · Month 8</span>
+    <div class="pc-name">Pick-and-Place Vision System</div>
+    <div class="pc-subtitle">YOLOv8 · Object Detection · 4-DOF Arm · Sorting Task</div>
+    <div class="pc-desc">Mount a camera above a workspace containing coloured blocks. Run YOLOv8 (trained on custom block classes) to detect objects and predict their 2D positions. Use a calibration homography to convert pixel coordinates to robot-frame XY. Command the 4-DOF arm from Project 04 (upgraded with a gripper) to pick each block and sort it into colour-coded bins. Measure pick success rate — target ≥ 85%.</div>
+    <div class="pc-outcome"><strong>Outcome:</strong> Vision-guided manipulation. This exact pipeline runs in every Amazon fulfilment centre and every Covariant deployment. You have built a warehouse robot.</div>
+    <div class="pc-tags"><span class="pc-tag">Python</span><span class="pc-tag">YOLOv8</span><span class="pc-tag">Computer Vision</span><span class="pc-tag">Gripper</span><span class="pc-tag">Calibration</span></div>
+  </div>
+</div>
+
+<!-- PROJECT 10 -->
+<div class="project-card">
+  <div class="pc-num">10</div>
+  <div class="pc-body">
+    <span class="pc-phase-tag pct-jhb">Johannesburg · Month 9–10</span>
+    <div class="pc-name">Multi-Robot Swarm Coordinator</div>
+    <div class="pc-subtitle">Three Robots · Distributed Task Allocation · MQTT Shared State</div>
+    <div class="pc-desc">Scale the fleet to three mobile robots. Each runs ROS 2 locally. A central broker (MQTT on a laptop) publishes a shared map and task list. Implement a distributed task-allocation algorithm (auction-based or greedy) so the swarm divides a set of pick-and-place tasks without collision. Robots bid for tasks based on proximity. Visualise all three robots simultaneously in RViz2. Document collision rate, task completion time, and utilisation.</div>
+    <div class="pc-outcome"><strong>Outcome:</strong> Multi-agent systems are the cutting edge of warehouse robotics. You have closed the Johannesburg chapter with a three-robot coordinated fleet — a portfolio piece that stands on its own.</div>
+    <div class="pc-tags"><span class="pc-tag">ROS 2</span><span class="pc-tag">MQTT</span><span class="pc-tag">Multi-Agent</span><span class="pc-tag">Python</span><span class="pc-tag">Task Allocation</span></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ PHASE B: FOOTHILL COLLEGE -->
+<div class="phase-divider">
+  <div class="pd-badge pd-foothill">Phase B — Foothill College, Silicon Valley</div>
+  <div class="pd-line"></div>
+  <div class="pd-dates">Sep 2027 – Aug 2029 · 2 years</div>
+</div>
+
+<!-- PROJECT 11 -->
+<div class="project-card">
+  <div class="pc-num">11</div>
+  <div class="pc-body">
+    <span class="pc-phase-tag pct-foothill">Foothill · Year 1 · Semester 1</span>
+    <div class="pc-name">Simulated Robot Environment</div>
+    <div class="pc-subtitle">Gazebo · ROS 2 · Simulated Sensor Stack · Physics Validation</div>
+    <div class="pc-desc">Transition from physical hardware to a professional simulation environment. Build a Gazebo world replicating the Johannesburg test arena. Port all Johannesburg robots (URDF models) into the simulation. Validate that sensor noise, PID tuning, and SLAM behave consistently between sim and hardware. Run 500 navigation trials in sim, measure success rates, and compare against physical results. This is "sim-to-real" — the key discipline at every serious robotics company.</div>
+    <div class="pc-outcome"><strong>Outcome:</strong> Simulation fluency. Every robotics company — Figure AI, Physical Intelligence, Nuro — runs millions of sim trials before hardware. You now work the same way.</div>
+    <div class="pc-tags"><span class="pc-tag">Gazebo</span><span class="pc-tag">ROS 2</span><span class="pc-tag">URDF</span><span class="pc-tag">Sim-to-Real</span><span class="pc-tag">Python</span></div>
+  </div>
+</div>
+
+<!-- PROJECT 12 -->
+<div class="project-card">
+  <div class="pc-num">12</div>
+  <div class="pc-body">
+    <span class="pc-phase-tag pct-foothill">Foothill · Year 1 · Semester 1</span>
+    <div class="pc-name">Drone Stabilisation Controller</div>
+    <div class="pc-subtitle">Quadrotor Dynamics · PID Cascade · ArduPilot / Betaflight</div>
+    <div class="pc-desc">Build or kit a 250mm racing-class quadrotor. Study quadrotor dynamics (Newton-Euler equations). Implement a cascaded PID controller for roll, pitch, yaw, and altitude. Tune in Gazebo first, then flash to flight controller (Betaflight). Fly a 3×3m indoor course autonomously using optical flow for position hold. Log IMU, motor output, and position error. Analyse step response and bandwidth.</div>
+    <div class="pc-outcome"><strong>Outcome:</strong> Aerial robotics and 3D PID control. Drones are the fastest-growing robotics segment (Zipline, Shield AI). You now have air and ground.</div>
+    <div class="pc-tags"><span class="pc-tag">PID Cascade</span><span class="pc-tag">Quadrotor</span><span class="pc-tag">Betaflight</span><span class="pc-tag">Gazebo</span><span class="pc-tag">IMU</span></div>
+  </div>
+</div>
+
+<!-- PROJECT 13 -->
+<div class="project-card">
+  <div class="pc-num">13</div>
+  <div class="pc-body">
+    <span class="pc-phase-tag pct-foothill">Foothill · Year 1 · Semester 2</span>
+    <div class="pc-name">Reinforcement Learning Locomotion</div>
+    <div class="pc-subtitle">PyBullet / MuJoCo · PPO · Sim-Trained Gait Policy</div>
+    <div class="pc-desc">Using MuJoCo or PyBullet, train a simulated four-legged (quadruped) robot to walk using Proximal Policy Optimisation (PPO). Design the reward function to minimise energy expenditure while maximising forward velocity. Run 10M environment steps. Export the trained policy and evaluate generalisation across terrain variations (slope, gravel noise). Compare against a hand-crafted PID gait.</div>
+    <div class="pc-outcome"><strong>Outcome:</strong> Reinforcement learning for locomotion — the core technique behind Boston Dynamics' Spot and every humanoid walking today. This is where robotics meets deep learning.</div>
+    <div class="pc-tags"><span class="pc-tag">Python</span><span class="pc-tag">MuJoCo</span><span class="pc-tag">Reinforcement Learning</span><span class="pc-tag">PPO</span><span class="pc-tag">PyTorch</span></div>
+  </div>
+</div>
+
+<!-- PROJECT 14 -->
+<div class="project-card">
+  <div class="pc-num">14</div>
+  <div class="pc-body">
+    <span class="pc-phase-tag pct-foothill">Foothill · Year 1 · Semester 2</span>
+    <div class="pc-name">Depth-Aware Navigation System</div>
+    <div class="pc-subtitle">Intel RealSense D435 · 3D Point Clouds · Costmap Integration</div>
+    <div class="pc-desc">Upgrade the mobile base with an Intel RealSense D435 depth camera. Generate real-time 3D point clouds (PCL). Project obstacles into a 3D costmap within Nav2. Navigate cluttered environments where 2D LiDAR fails (objects below sensor height, transparent obstacles). Benchmark navigation success rate in a 20-object cluttered room vs. the LiDAR-only baseline from Project 08.</div>
+    <div class="pc-outcome"><strong>Outcome:</strong> 3D perception and costmap planning. Real-world robots see in 3D. You have bridged the gap from 2D SLAM to volumetric navigation.</div>
+    <div class="pc-tags"><span class="pc-tag">ROS 2</span><span class="pc-tag">RealSense</span><span class="pc-tag">PCL</span><span class="pc-tag">Nav2</span><span class="pc-tag">3D Costmap</span></div>
+  </div>
+</div>
+
+<!-- PROJECT 15 -->
+<div class="project-card">
+  <div class="pc-num">15</div>
+  <div class="pc-body">
+    <span class="pc-phase-tag pct-foothill">Foothill · Year 2 · Semester 1</span>
+    <div class="pc-name">Robotic Manipulation with Imitation Learning</div>
+    <div class="pc-subtitle">Teleoperation · Behaviour Cloning · Real Hardware Deployment</div>
+    <div class="pc-desc">Use the 4-DOF arm with a VR controller (or SpaceMouse) to collect 200 teleoperation demonstrations of a peg-in-hole assembly task. Train a behaviour cloning policy (CNN over wrist camera images → joint velocities) using PyTorch. Deploy on hardware. Measure task success rate. Implement DAgger (Dataset Aggregation) to improve on initial BC. This is the technique used by Physical Intelligence (π) to train their foundation models.</div>
+    <div class="pc-outcome"><strong>Outcome:</strong> Imitation learning from demonstration — the frontier of dexterous manipulation. You are running research-grade experiments on real hardware.</div>
+    <div class="pc-tags"><span class="pc-tag">PyTorch</span><span class="pc-tag">Behaviour Cloning</span><span class="pc-tag">DAgger</span><span class="pc-tag">Teleoperation</span><span class="pc-tag">CNN</span></div>
+  </div>
+</div>
+
+<!-- PROJECT 16 -->
+<div class="project-card">
+  <div class="pc-num">16</div>
+  <div class="pc-body">
+    <span class="pc-phase-tag pct-foothill">Foothill · Year 2 · Semester 1</span>
+    <div class="pc-name">Human-Robot Collaborative Workspace</div>
+    <div class="pc-subtitle">Pose Estimation · Safety Zones · ROS 2 MoveIt</div>
+    <div class="pc-desc">Integrate MediaPipe Pose into a ROS 2 node to track a human operator's skeleton in real time. Define dynamic safety zones: if any human keypoint enters a warning zone, the arm reduces speed; if it enters the stop zone, it halts immediately. Use MoveIt 2 for collision-aware motion planning. Validate with 100 trials, measuring response latency. This is ISO/TS 15066-compliant collaborative robotics.</div>
+    <div class="pc-outcome"><strong>Outcome:</strong> Human-robot safety — a legal requirement for every cobot deployment. You understand the engineering and the standard. Rare at undergrad level.</div>
+    <div class="pc-tags"><span class="pc-tag">ROS 2</span><span class="pc-tag">MoveIt 2</span><span class="pc-tag">MediaPipe</span><span class="pc-tag">Safety Systems</span><span class="pc-tag">Cobot</span></div>
+  </div>
+</div>
+
+<!-- PROJECT 17 -->
+<div class="project-card">
+  <div class="pc-num">17</div>
+  <div class="pc-body">
+    <span class="pc-phase-tag pct-foothill">Foothill · Year 2 · Semester 2</span>
+    <div class="pc-name">Autonomous Outdoor Navigation</div>
+    <div class="pc-subtitle">GPS/RTK Fusion · EKF Localisation · Outdoor Terrain</div>
+    <div class="pc-desc">Mount a u-blox RTK-GPS module alongside the LiDAR and RealSense. Fuse GPS, IMU, wheel odometry, and LiDAR in an Extended Kalman Filter (robot_localization package in ROS 2). Navigate a 500m outdoor route on the Foothill College campus — crossing pavement, grass, and kerbs. Log localisation error against ground-truth GPS. Demonstrate reliable ±10 cm positioning outdoors.</div>
+    <div class="pc-outcome"><strong>Outcome:</strong> Outdoor autonomy with sensor fusion. Autonomous outdoor navigation at centimetre accuracy is what Nuro, Gatik, and every agricultural robot company needs.</div>
+    <div class="pc-tags"><span class="pc-tag">ROS 2</span><span class="pc-tag">RTK-GPS</span><span class="pc-tag">EKF</span><span class="pc-tag">Sensor Fusion</span><span class="pc-tag">LiDAR</span></div>
+  </div>
+</div>
+
+<!-- PROJECT 18 -->
+<div class="project-card">
+  <div class="pc-num">18</div>
+  <div class="pc-body">
+    <span class="pc-phase-tag pct-foothill">Foothill · Year 2 · Semester 2</span>
+    <div class="pc-name">Foundation Model Robot Interface</div>
+    <div class="pc-subtitle">LLM Tool-Use · Task Decomposition · ROS 2 Action Server</div>
+    <div class="pc-desc">Connect a large language model (Claude or GPT-4o via API) to the robot's ROS 2 action server. The LLM receives natural language instructions ("clear the table, put cups in the dishwasher, bring me the red book") and decomposes them into a sequence of primitive robot actions. Each action calls a ROS 2 action (navigate_to, pick_object, place_object). Evaluate task completion rate on 50 household instructions. This is the architecture of Physical Intelligence's π0.</div>
+    <div class="pc-outcome"><strong>Outcome:</strong> LLM-to-robot grounding. You have integrated the most advanced AI models with physical hardware — the defining capability of the next generation of robots.</div>
+    <div class="pc-tags"><span class="pc-tag">LLM API</span><span class="pc-tag">ROS 2</span><span class="pc-tag">Task Planning</span><span class="pc-tag">Tool Use</span><span class="pc-tag">Python</span></div>
+  </div>
+</div>
+
+<!-- PROJECT 19 -->
+<div class="project-card">
+  <div class="pc-num">19</div>
+  <div class="pc-body">
+    <span class="pc-phase-tag pct-foothill">Foothill · Year 2 · Final Semester</span>
+    <div class="pc-name">Open-Source Robotics Contribution</div>
+    <div class="pc-subtitle">ROS 2 Package · GitHub · Community Merged PR</div>
+    <div class="pc-desc">Identify a gap in the ROS 2 ecosystem (from direct experience across Projects 08–18). Build and publish a standalone ROS 2 package solving a real problem — e.g. a lightweight behaviour tree executor, a multi-robot task auction library, or a sim-to-real transfer calibration tool. Write full documentation, tests, and a tutorial. Submit to ros2/ros2 or a community package index. Target at least one merged PR into an existing major package. Present at a Silicon Valley Robotics meetup.</div>
+    <div class="pc-outcome"><strong>Outcome:</strong> Open-source contribution is the signal that separates hobbyists from engineers. A merged PR and a GitHub package with real users is concrete evidence of engineering quality for any Stanford admissions reader.</div>
+    <div class="pc-tags"><span class="pc-tag">ROS 2</span><span class="pc-tag">Open Source</span><span class="pc-tag">C++</span><span class="pc-tag">Python</span><span class="pc-tag">Documentation</span></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ PHASE C: STANFORD CAPSTONE -->
+<div class="phase-divider">
+  <div class="pd-badge pd-stanford">Phase C — Stanford Admission Capstone</div>
+  <div class="pd-line"></div>
+  <div class="pd-dates">Completed before Stanford transfer · Aug 2029</div>
+</div>
+
+<div class="stanford-callout">
+  <div class="sc-icon">🎓</div>
+  <div class="sc-title">Project 20 — The Stanford Admission Project</div>
+  <div class="sc-sub">This project must be large enough, novel enough, and documented well enough that any Stanford admissions reader can immediately understand its significance. It is not a course project. It is original engineering research. It should be submitted to an undergraduate research journal, presented at a regional conference, or referenced in a published paper. The bar is: could this project appear in a Stanford Engineering spotlight?</div>
+</div>
+
+<!-- PROJECT 20 -->
+<div class="project-card stanford-card">
+  <div class="pc-num">20</div>
+  <div class="pc-body">
+    <span class="pc-phase-tag pct-stanford">Stanford Capstone · Aug 2029</span>
+    <div class="pc-name">AdaptBot — A Self-Supervised Continual Learning Framework for Physical Robots</div>
+    <div class="pc-subtitle">Continual Learning · Physical Deployment · Novel Benchmark · Peer-Reviewed Target</div>
+    <div class="pc-desc">
+      The problem AdaptBot solves: robots trained in one environment catastrophically forget previous skills when they learn new ones (catastrophic forgetting). Current solutions either require full retraining or offline data replay — neither is viable on a deployed robot in the field.
+      <br><br>
+      AdaptBot is a lightweight continual learning framework for physical robots that enables online skill acquisition without catastrophic forgetting, using a combination of elastic weight consolidation (EWC) and a compressed episodic memory buffer stored directly on the robot's embedded compute. The framework integrates with ROS 2 as a drop-in middleware layer — any existing ROS 2 manipulation pipeline can use AdaptBot without rewriting their codebase.
+      <br><br>
+      <strong>Scope:</strong> Deploy on the arm + mobile base hardware built across Projects 04–18. Train on five sequential tasks (pick-and-place, peg-in-hole, drawer opening, cup stacking, cable routing). Measure forward transfer, backward transfer, and intransigence against three baselines (naive fine-tuning, EWC alone, PackNet). Run 2,000 trials. Publish benchmark dataset on HuggingFace. Write a 6-page paper targeting the IEEE International Conference on Robotics and Automation (ICRA) student paper track or the Conference on Robot Learning (CoRL).
+    </div>
+    <div class="pc-outcome"><strong>Outcome:</strong> An original research contribution to a fundamental open problem in robotics, deployed on real hardware, with a public dataset and a conference submission. This is the project that gets you into Stanford. No other transfer applicant to Stanford Engineering will have this.</div>
+    <div class="pc-tags">
+      <span class="pc-tag">PyTorch</span>
+      <span class="pc-tag">Continual Learning</span>
+      <span class="pc-tag">EWC</span>
+      <span class="pc-tag">ROS 2</span>
+      <span class="pc-tag">Real Hardware</span>
+      <span class="pc-tag">HuggingFace</span>
+      <span class="pc-tag">ICRA / CoRL Target</span>
+      <span class="pc-tag">Original Research</span>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  War Room Roadmap · Jun 2026 · <a href="index.html">← Back to Roadmap</a>
+</footer>
+
+</body>
+</html>

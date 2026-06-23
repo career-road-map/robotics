@@ -187,66 +187,34 @@ main {
 .mc-desc { font-size: 12px; color: var(--muted); line-height: 1.65; margin-bottom: 10px; }
 .mc-tags { display: flex; flex-wrap: wrap; gap: 6px; }
 .mc-tag {
-  font-size: 10px;
   font-family: var(--mono);
-  padding: 2px 7px;
+  font-size: 10px;
+  padding: 3px 8px;
   border-radius: 3px;
-  border: 0.5px solid var(--border2);
   background: var(--bg3);
   color: var(--muted);
+  border: 0.5px solid var(--border);
 }
-
-/* PROJECT CARDS GRID (phase 02 - two columns) */
-.proj-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 10px; }
-@media(max-width:680px){ .proj-two-col { grid-template-columns: 1fr; } }
 
 /* DIVERGE */
 .diverge-box {
-  background: var(--bg2);
   border: 0.5px solid var(--border2);
   border-radius: var(--radius-lg);
-  padding: 20px 22px;
+  padding: 18px 20px;
   margin-bottom: 14px;
   text-align: center;
 }
-.div-label { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 10px; }
-.div-arrow-row { display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 6px; }
-.div-a { color: var(--player-color); font-size: 20px; font-weight: 600; }
-.div-b { color: var(--magenta); font-size: 20px; font-weight: 600; }
-.div-choose { font-size: 12px; color: var(--muted); font-family: var(--mono); }
-.div-title { font-size: 13px; font-weight: 500; color: var(--muted); }
 
-/* PATH COLUMNS */
-.path-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
-@media(max-width:640px){ .path-cols { grid-template-columns: 1fr; } }
-.path-col { border-radius: var(--radius-lg); padding: 16px 18px; border: 0.5px solid; }
-.path-a-col { background: var(--player-bg); border-color: var(--player-border); }
-.path-b-col { background: rgba(224,40,122,0.06); border-color: rgba(224,40,122,0.20); }
-.path-col-hdr {
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-}
-.pch-a { color: var(--player-color); }
-.pch-b { color: var(--magenta); }
+/* PATH STEPS */
+.path-col { }
 .path-step {
   background: var(--bg2);
   border: 0.5px solid var(--border);
   border-radius: var(--radius);
-  padding: 14px 16px;
-  margin-bottom: 8px;
-  cursor: default;
-  transition: border-color .15s;
+  padding: 16px;
+  margin-bottom: 10px;
 }
-.path-step:last-child { margin-bottom: 0; }
-.path-step:hover { border-color: var(--cyan); }
-.ps-period { font-family: var(--mono); font-size: 10px; color: var(--dim); margin-bottom: 4px; }
+.ps-period { font-family: var(--mono); font-size: 10px; color: var(--dim); margin-bottom: 4px; letter-spacing: .05em; }
 .ps-name { font-size: 13px; font-weight: 600; margin-bottom: 3px; line-height: 1.3; }
 .ps-loc { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-bottom: 6px; }
 .ps-desc { font-size: 11px; color: var(--muted); line-height: 1.55; }
@@ -277,6 +245,49 @@ main {
 .oc-vb { color: var(--magenta); }
 .oc-sub { font-size: 12px; color: var(--muted); line-height: 1.6; }
 
+/* LADDER PROJECT LIST */
+.ladder-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.ladder-list li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.ladder-num {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--cyan2);
+  flex-shrink: 0;
+  margin-top: 2px;
+  min-width: 22px;
+}
+.ladder-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .06em;
+  color: var(--cyan2);
+  text-decoration: none;
+  border: 0.5px solid rgba(0,200,176,0.30);
+  background: rgba(0,200,176,0.08);
+  padding: 4px 10px;
+  border-radius: 4px;
+  margin-top: 12px;
+  transition: background .15s, border-color .15s;
+}
+.ladder-link:hover { background: rgba(0,200,176,0.16); border-color: rgba(0,200,176,0.5); }
+
 footer {
   border-top: 1px solid var(--border);
   padding: 28px 48px;
@@ -294,7 +305,6 @@ footer a:hover { text-decoration: underline; }
   .header-scanline { padding: 36px 24px 28px; }
   main { padding: 32px 24px 60px; }
   .header-top { flex-direction: column; }
-  
   footer { padding: 24px; }
 }
 @media(max-width:600px){
@@ -310,7 +320,7 @@ footer a:hover { text-decoration: underline; }
     <div class="header-inner">
       <div class="boot-tag">WAR ROOM // MISSION BRIEF</div>
       <h1><span class="cyan">Robotics Engineering</span></h1>
-      <p class="header-desc">From 5 × A* in Johannesburg to a £2,000/day contract in London — or a $3M/year role in Silicon Valley. Two paths. One non-negotiable starting point.</p>
+      <p class="header-desc">Mile Stone 1: Silicon Valley. 15 Months.</p>
     </div>
   </div>
 </header>
@@ -353,117 +363,114 @@ footer a:hover { text-decoration: underline; }
   <div class="phase-content">
     <div class="phase-hdr">
       <div class="phase-badge pb-shared">Phase 02 — Project Build</div>
-      <div class="phase-dates">Nov 2026 – Mar 2027 · Johannesburg (5 months)</div>
+      <div class="phase-dates">November 2026 – Aug 2027 · Johannesburg (10 months)</div>
     </div>
-    <div style="max-width:560px; margin:0 auto;">
+    <div style="max-width:620px;">
       <div class="milestone-card" style="margin-bottom:0; border-color: rgba(224,40,122,0.28);">
         <div class="mc-head">
           <div class="mc-icon">🤖</div>
           <div class="mc-titles">
-            <div class="mc-name">Project</div>
-            <div class="mc-loc">Robotics Engineering / AI</div>
+            <div class="mc-name">Robotics Engineering Ladder — 20 Projects</div>
+            <div class="mc-loc">Generic Robotics Engineering · Johannesburg → Silicon Valley → Stanford</div>
           </div>
+          <div class="mc-target mt-cyan">Project 20 → Stanford</div>
         </div>
-        <div class="mc-desc">Build a real robotics engineering AI project. Control systems, computer vision, simulation. This is the thing that makes an admissions committee stop scrolling. Functional, documented, deployed.</div>
-        <div class="mc-tags"><span class="mc-tag">Robotics AI</span><span class="mc-tag">Computer vision</span><span class="mc-tag">GitHub portfolio</span></div>
+        <div class="mc-desc">
+          A 20-rung ladder spanning the full journey: 10 months in Johannesburg, 2 years at Foothill College, and a capstone project engineered to be Stanford-admission-level. Each project builds directly on the last — hardware, firmware, computer vision, motion planning, autonomous systems, and finally a novel robotics contribution that no applicant can replicate.
+        </div>
+
+        <!-- First 10 Projects (Johannesburg Phase) -->
+        <div style="font-family: var(--mono); font-size: 10px; letter-spacing:.08em; text-transform:uppercase; color: var(--cyan2); margin-bottom: 8px; margin-top:4px;">// Johannesburg Phase · Projects 1–10</div>
+        <ul class="ladder-list">
+          <li><span class="ladder-num">01</span><span>Blink Machine — GPIO-controlled LED array with timing logic (C on Raspberry Pi)</span></li>
+          <li><span class="ladder-num">02</span><span>Line-Following Robot — IR sensors + PID motor control on a two-wheel chassis</span></li>
+          <li><span class="ladder-num">03</span><span>Ultrasonic Obstacle Avoidance Bot — real-time distance sensing and reactive navigation</span></li>
+          <li><span class="ladder-num">04</span><span>Servo Arm Controller — 3-DOF desktop arm with inverse kinematics and Python GUI</span></li>
+          <li><span class="ladder-num">05</span><span>Computer Vision Object Tracker — OpenCV colour/shape tracking on a pan-tilt turret</span></li>
+          <li><span class="ladder-num">06</span><span>Autonomous Grid Navigator — A* pathfinding on a physical tile grid with encoder odometry</span></li>
+          <li><span class="ladder-num">07</span><span>Voice-Command Robot — NLP intent parsing (Whisper) mapped to motor primitives</span></li>
+          <li><span class="ladder-num">08</span><span>SLAM Mapper — LiDAR-based 2D occupancy map generation with ROS 2 on a mobile base</span></li>
+          <li><span class="ladder-num">09</span><span>Pick-and-Place Vision System — YOLO object detection feeding a 4-DOF arm sorting task</span></li>
+          <li><span class="ladder-num">10</span><span>Multi-Robot Swarm Coordinator — three bots, distributed task allocation, shared state via MQTT</span></li>
+        </ul>
+
+        <a href="ladder.html" class="ladder-link">
+          ⟶ VIEW ALL 20 PROJECTS — FULL DETAIL
+        </a>
+
+        <div class="mc-tags" style="margin-top:14px;">
+          <span class="mc-tag">Python</span>
+          <span class="mc-tag">C / C++</span>
+          <span class="mc-tag">ROS 2</span>
+          <span class="mc-tag">OpenCV</span>
+          <span class="mc-tag">Raspberry Pi</span>
+          <span class="mc-tag">Robotics / AI</span>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
 <!-- DIVERGE -->
-<div class="diverge-box">
-  <div class="div-label">// April 2027 — the paths diverge</div>
-  <div class="div-arrow-row">
-    <div class="div-a">⬅ Path A</div>
-    <div class="div-choose">CHOOSE</div>
-    <div class="div-b">Path B ➡</div>
-  </div>
-  <div class="div-title">London via UCL &nbsp;·&nbsp; or &nbsp;·&nbsp; Silicon Valley via Stanford</div>
+<div class="diverge-box" style="background: rgba(224,40,122,0.05); border-color: rgba(224,40,122,0.22);">
+  <div style="font-size:28px; margin-bottom:8px;">🇺🇸</div>
+  <div style="font-family: var(--display); font-size: 18px; font-weight: 800; color: var(--player-color); letter-spacing: -.01em;">Silicon Valley</div>
 </div>
 
-<!-- PATH COLUMNS -->
-<div class="path-cols">
-  <div class="path-col path-a-col">
-    <div class="path-col-hdr pch-a">🇬🇧 Path A — London</div>
-    <div class="path-step">
-      <div class="ps-period">Apr – Aug 2027 · Johannesburg</div>
-      <div class="ps-name">UCL Performance-Based Entry</div>
-      <div class="ps-loc">Preparation &amp; Application Phase</div>
-      <div class="ps-desc">Build the UCL application from Johannesburg. Performance-based entry means the project portfolio and IGCSE scores do the talking. 5 months to polish both.</div>
-      <span class="ps-badge psb-a">5 months</span>
-    </div>
-    <div class="path-step">
-      <div class="ps-period">Sep 2027 – Aug 2028 · Johannesburg</div>
-      <div class="ps-name">UCL Computer Science Online — Year 1</div>
-      <div class="ps-loc">Remote from Johannesburg</div>
-      <div class="ps-desc">Year 1 of UCL's Computer Science programme, completed remotely. Full academic rigour. Build the foundation while still at home, zero relocation cost.</div>
-      <span class="ps-badge psb-a">12 months · remote</span>
-    </div>
-    <div class="path-step">
-      <div class="ps-period">Sep 2029 – Aug 2031 · London</div>
-      <div class="ps-name">UCL Computer Science — Years 2 &amp; 3</div>
-      <div class="ps-loc">UCL Campus, London</div>
-      <div class="ps-desc">Transfer to desk for the final two undergraduate years. London campus. Research labs. Industry connections. The UCL network activates here.</div>
-      <span class="ps-badge psb-a">2 years · London</span>
-    </div>
-    <div class="path-step">
-      <div class="ps-period">Sep 2031 – Aug 2033 · London</div>
-      <div class="ps-name">Imperial College — Master's Degree</div>
-      <div class="ps-loc">Imperial College London · Years 4 &amp; 5</div>
-      <div class="ps-desc">The credential that opens the top tier of London tech. Imperial's engineering master's is recognised globally. Two years. Two more years of network-building.</div>
-      <span class="ps-badge psb-a">2 years · Imperial</span>
-    </div>
-  </div>
+<!-- PATH: SILICON VALLEY ONLY -->
+<div class="path-col path-b-col" style="border-radius: var(--radius-lg); padding: 16px 18px; border: 0.5px solid rgba(224,40,122,0.20); background: rgba(224,40,122,0.06); margin-bottom: 14px;">
 
-  <div class="path-col path-b-col">
-    <div class="path-col-hdr pch-b">🇺🇸 Path B — Silicon Valley</div>
-    <div class="path-step">
-      <div class="ps-period">Apr – Aug 2027 · Johannesburg (10 months total)</div>
-      <div class="ps-name">Deep Project Work</div>
-      <div class="ps-loc">Robotics Engineering AI</div>
-      <div class="ps-desc">10 months of serious project work in Robotics Engineering AI. This is the portfolio that makes Foothill College an entry point, not a ceiling. Every line of code counts.</div>
-      <span class="ps-badge psb-b">10 months · JHB</span>
-    </div>
-    <div class="path-step">
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:8px;">
+    <div class="path-step" style="margin-bottom:0;">
       <div class="ps-period">Sep 2027 – Aug 2029 · Silicon Valley</div>
       <div class="ps-name">Foothill College — Engineering Foundation</div>
       <div class="ps-loc">Foothill College, Silicon Valley</div>
       <div class="ps-desc">Two years of engineering foundation in the heart of Silicon Valley. 4.0 GPA is the only acceptable outcome. The stepping stone to Stanford — not a detour from it.</div>
       <span class="ps-badge psb-b">2 years · SV</span>
     </div>
-    <div class="path-step">
-      <div class="ps-period">Sep 2029 – Aug 2031 · Silicon Valley</div>
-      <div class="ps-name">Stanford University — Engineering Years 3 &amp; 4</div>
-      <div class="ps-loc">Stanford University, Palo Alto</div>
-      <div class="ps-desc">Transfer to Stanford for the final two undergraduate years. The credential, the network, and the ecosystem that defines Silicon Valley careers.</div>
-      <span class="ps-badge psb-b">2 years · Stanford</span>
+    <div class="path-step" style="margin-bottom:0; border-color: rgba(224,40,122,0.30); background: rgba(224,40,122,0.04);">
+      <div class="ps-period">Sep 2027 – Aug 2029 · Silicon Valley</div>
+      <div class="ps-name" style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;">Internship — Robotics Engineering<strong style="font-size:12px;color:var(--player-color);white-space:nowrap;">$120,000/year</strong></div>
+      <div class="ps-loc">Silicon Valley Robotics Ecosystem</div>
+      <div class="ps-desc">
+        While studying at Foothill, leverage the robotics portfolio built across 20 ladder projects — hardware, SLAM, vision systems, and autonomous coordination. A GitHub-documented project ladder spanning Johannesburg to Silicon Valley is the internship application that skips the queue.
+        <br><br>
+        <span style="font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--player-color);display:block;margin-bottom:6px;">// Target Employers</span>
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:5px;">
+          <li style="display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--player-color);flex-shrink:0;">→</span><span><strong>Figure AI</strong> — humanoid robots for manufacturing · $39B valuation, Sunnyvale</span></li>
+          <li style="display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--player-color);flex-shrink:0;">→</span><span><strong>Physical Intelligence (π)</strong> — foundation AI for robots · Sequoia/Lux-backed, SF</span></li>
+          <li style="display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--player-color);flex-shrink:0;">→</span><span><strong>Covariant</strong> — universal AI brain for warehouse/logistics robots, Emeryville</span></li>
+          <li style="display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--player-color);flex-shrink:0;">→</span><span><strong>Nuro</strong> — autonomous driverless delivery vehicles · $1B+ raised, Mountain View</span></li>
+          <li style="display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--player-color);flex-shrink:0;">→</span><span><strong>Dexterity</strong> — AI-powered logistics &amp; supply chain robotics, Redwood City</span></li>
+        </ul>
+        <br>
+        The 20-project ladder is the portfolio. Shipped hardware, documented repos, and a robotics origin story from Johannesburg puts you in front of every one of these teams before the interview.
+      </div>
+      <span class="ps-badge psb-b">concurrent · 2 years</span>
     </div>
+  </div>
+
+  <div class="path-step">
+    <div class="ps-period">Sep 2029 – Aug 2031 · Silicon Valley</div>
+    <div class="ps-name">Stanford University — Engineering Years 3 &amp; 4</div>
+    <div class="ps-loc">Stanford University, Palo Alto</div>
+    <div class="ps-desc">Transfer to Stanford for the final two undergraduate years. The credential, the network, and the ecosystem that defines Silicon Valley careers.</div>
+    <span class="ps-badge psb-b">2 years · Stanford</span>
   </div>
 </div>
 
 <!-- OUTCOMES -->
-<div class="outcome-cols">
-  <div class="outcome-card oc-a">
-    <div style="font-size:28px;margin-bottom:10px">🏙️</div>
-    <div class="oc-path oc-pa">// Path A outcome · Sep 2033</div>
-    <div class="oc-title">Startup · or London Contract</div>
-    <div class="oc-val oc-va">£2,000/day</div>
-    <div class="oc-sub">UCL + Imperial credential. London tech market. Or found your own Robotics AI company with 7 years of elite education and network behind you.</div>
-  </div>
-  <div class="outcome-card oc-b">
-    <div style="font-size:28px;margin-bottom:10px">🚀</div>
-    <div class="oc-path oc-pb">// Path B outcome · Sep 2031</div>
-    <div class="oc-title">Startup · or SV Role</div>
-    <div class="oc-val oc-vb">$3M/year</div>
-    <div class="oc-sub">Stanford credential. Silicon Valley ecosystem. Or co-found with Dad — two engineers, 30 years of software experience, one unforgettable story.</div>
-  </div>
+<div class="outcome-card oc-b" style="margin-bottom: 24px;">
+  <div style="font-size:32px;margin-bottom:12px">🚀</div>
+  <div class="oc-path oc-pb">// Silicon Valley outcome · Sep 2031</div>
+  <div class="oc-title">Startup or Robotics Engineering Research</div>
+  <div class="oc-sub">Stanford credential. Silicon Valley ecosystem. 20-project robotics portfolio shipped.</div>
 </div>
 
 </main>
 
 <footer>
-  War Room Roadmap · Jun 2026 → Destination
+  War Room Roadmap · Jun 2026 · <a href="ladder.html">Robotics Ladder — All 20 Projects →</a>
 </footer>
 
 </body>
